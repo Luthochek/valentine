@@ -31,6 +31,7 @@
 
     /* Кнопка */
     #loveBtn {
+      display: none;
       margin-top: 1rem;
       padding: 10px 20px;
       border: none;
@@ -77,42 +78,45 @@
   </style>
 </head>
 <body>
-  <div id="greeting" class="message">
-    Слушай, киця ❤️
+  <div id="textDisplay" class="message">
+    Клацни, сонце ❤️
   </div>
 
-  <div id="valentine" class="message hidden">
-    Эта валентинка тебе ❤️
-  </div>
-
-  <div id="love" class="message hidden">
-    Я тебя люблю ❤️
-    <br />
-    <button id="loveBtn">Нажми, киця</button>
-  </div>
+  <button id="loveBtn">Клацни ниже, кицька</button>
 
   <script>
-    const greetingEl = document.getElementById('greeting');
-    const valentineEl = document.getElementById('valentine');
-    const loveEl = document.getElementById('love');
+    const textDisplay = document.getElementById('textDisplay');
     const loveBtn = document.getElementById('loveBtn');
+
     let clickCount = 0;
     let heartInterval;
 
+    const messages = [
+      "Клацни, сонце ❤️",
+      "Вот и что клацаем?",
+      "Ты уверена?",
+      "Прям точно?",
+      "Ну ладно...",
+      "Я хотел сказать...",
+      "Что...",
+      "Люблю тебя киця всем сердечком ❤️",
+      "Это валентинка тебе ❤️",
+      "Клацни ниже, кицька"
+    ];
+
     document.addEventListener('click', () => {
-      clickCount++;
-      if (clickCount === 1) {
-        greetingEl.classList.add('hidden');
-        setTimeout(() => valentineEl.classList.remove('hidden'), 300);
-      } else if (clickCount === 2) {
-        valentineEl.classList.add('hidden');
-        setTimeout(() => loveEl.classList.remove('hidden'), 300);
+      if (clickCount < messages.length - 1) {
+        clickCount++;
+        textDisplay.innerHTML = messages[clickCount];
+
+        if (clickCount === messages.length - 1) {
+          loveBtn.style.display = "block"; // Показываем кнопку в конце
+        }
       }
     });
 
     loveBtn.addEventListener('click', () => {
-      // СРАЗУ ПЕРЕХОД НА ДРУГУЮ СТРАНИЦУ
-      window.location.href = "heart.html";
+      window.location.href = "heart.html"; // Переход на страницу сердца
     });
 
     function startHearts() {
