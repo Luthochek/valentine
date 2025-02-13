@@ -8,7 +8,7 @@
     body {
       margin: 0;
       padding: 0;
-      background-color: #fff; /* Фон белый */
+      background-color: #fff;
       overflow: hidden;
       font-family: sans-serif;
       text-align: center;
@@ -16,13 +16,13 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      flex-direction: column;
       position: relative;
       transition: background 1s ease-in-out;
     }
 
     /* Надписи */
     .message {
-      position: absolute;
       font-size: 2.5rem;
       color: #ff3333;
       text-shadow: 0 0 15px #ff3333;
@@ -32,7 +32,7 @@
     /* Кнопка */
     #loveBtn {
       display: none;
-      margin-top: 1rem;
+      margin-top: 1rem; /* Отступ от текста */
       padding: 10px 20px;
       border: none;
       border-radius: 10px;
