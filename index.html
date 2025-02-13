@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Слушай, киця</title>
+  <style>
+    /* Основные стили */
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #fff; /* Фон белый */
+      overflow: hidden;
+      font-family: sans-serif;
+      text-align: center;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      transition: background 1s ease-in-out;
+    }
+
+    /* Надписи */
+    .message {
+      position: absolute;
+      font-size: 2.5rem;
+      color: #ff3333;
+      text-shadow: 0 0 15px #ff3333;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    /* Кнопка */
+    #loveBtn {
+      margin-top: 1rem;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      background-color: #ff3333;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    #loveBtn:hover {
+      background-color: #cc0000;
+    }
+
+    /* Скрытые элементы */
+    .hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Сердечки */
+    .heart {
+      position: fixed;
+      font-size: var(--size);
+      color: red;
+      opacity: var(--opacity);
+      animation: floatHearts var(--speed) linear forwards;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    /* Анимация движения сердечек */
+    @keyframes floatHearts {
+      0% {
+        transform: translateY(0) translateX(0) scale(0.8);
+        opacity: var(--opacity);
+      }
+      100% {
+        transform: translateY(-120vh) translateX(calc(var(--x-move) * 1vw)) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <div id="greeting" class="message">
+    Слушай, киця ❤️
+  </div>
+
+  <div id="valentine" class="message hidden">
+    Эта валентинка тебе ❤️
+  </div>
+
+  <div id="love" class="message hidden">
+    Я тебя люблю ❤️
+    <br />
+    <button id="loveBtn">Нажми, киця</button>
+  </div>
+
+  <script>
+    const greetingEl = document.getElementById('greeting');
+    const valentineEl = document.getElementById('valentine');
+    const loveEl = document.getElementById('love');
+    const loveBtn = document.getElementById('loveBtn');
+    let clickCount = 0;
+    let heartInterval;
+
+    document.addEventListener('click', () => {
+      clickCount++;
+      if (clickCount === 1) {
+        greetingEl.classList.add('hidden');
+        setTimeout(() => valentineEl.classList.remove('hidden'), 300);
+      } else if (clickCount === 2) {
+        valentineEl.classList.add('hidden');
+        setTimeout(() => loveEl.classList.remove('hidden'), 300);
+      }
+    });
+
+    loveBtn.addEventListener('click', () => {
+      // Остановить создание новых сердечек
+      clearInterval(heartInterval);
+      // Удалить все сердечки
+      document.querySelectorAll('.heart').forEach(heart => {
+        heart.style.transition = "opacity 1s ease-in-out";
+        heart.style.opacity = "0";
+        setTimeout(() => heart.remove(), 1000);
+      });
+      // Плавный переход на новую страницу
+      setTimeout(() => {
+        window.location.href = "heart.html";
+      }, 2000);
+    });
+
+    function startHearts() {
+      heartInterval = setInterval(() => {
+        createHeart();
+      }, 200);
+    }
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.innerHTML = "♥️";
+      heart.style.setProperty("--size", Math.random() * 40 + 20 + "px");
+      heart.style.setProperty("--opacity", Math.random() * 0.6 + 0.4);
+      heart.style.setProperty("--speed", Math.random() * 3 + 5 + "s");
+      let xMove = Math.random() * 40 - 20;
+      heart.style.setProperty("--x-move", xMove);
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.bottom = Math.random() * 10 - 10 + "vh";
+      document.body.appendChild(heart);
+      setTimeout(() => {
+        heart.remove();
+      }, 8000);
+    }
+
+    startHearts();
+  </script>
+</body>
+</html>
