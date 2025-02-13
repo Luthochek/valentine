@@ -111,18 +111,8 @@
     });
 
     loveBtn.addEventListener('click', () => {
-      // Остановить создание новых сердечек
-      clearInterval(heartInterval);
-      // Удалить все сердечки
-      document.querySelectorAll('.heart').forEach(heart => {
-        heart.style.transition = "opacity 1s ease-in-out";
-        heart.style.opacity = "0";
-        setTimeout(() => heart.remove(), 1000);
-      });
-      // Плавный переход на новую страницу
-      setTimeout(() => {
-        window.location.href = "heart.html";
-      }, 2000);
+      // СРАЗУ ПЕРЕХОД НА ДРУГУЮ СТРАНИЦУ
+      window.location.href = "heart.html";
     });
 
     function startHearts() {
